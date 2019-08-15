@@ -7,8 +7,7 @@ device='genesys:libusb:001:004'
 mode='Color' # ex: Color|Gray|Lineart
 
 first_page=1
-#last_page=100
-last_page=1
+last_page=100
 
 width=210 # millimeters
 length=297 # millimeters
