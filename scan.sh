@@ -45,10 +45,10 @@ while [ $i -le $last_page ]; do
     if [ -n "$compressed_image_quality" ]; then
       quality="-quality $compressed_image_quality"
     fi
-    if [ -n "$rotate" ]; then
-      rotate="-rotate $rotate"
+    if [ ! $rotate -eq 0 ]; then
+      rotation="-rotate $rotate"
     fi
-    convert $quality $rotate $page.pnm ../compressed/$page.$compressed_image_format
+    convert $quality $rotation $page.pnm ../compressed/$page.$compressed_image_format
   fi
 
   i=`expr $i + 1`

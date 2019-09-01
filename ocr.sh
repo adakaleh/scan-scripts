@@ -17,20 +17,20 @@ mkdir text
 
 # get rotation argument for unpaper
 if [ $rotate -eq 90 ]; then
-  rotate='--pre-rotate 90'
+  rotation='--pre-rotate 90'
 elif [ $rotate -eq 180 ]; then
-  rotate='--pre-mirror v,h'
+  rotation='--pre-mirror v,h'
 elif [ $rotate -eq 270 ]; then
-  rotate='--pre-rotate -90'
+  rotation='--pre-rotate -90'
 else
-  rotate=''
+  rotation=''
 fi
 
 # convert images
 cd img
 for i in `seq --format=%03.f $first_page $last_page`; do
   echo preparing page $i
-  unpaper $rotate orig/$i.pnm ocr/unpapered-$i.pnm
+  unpaper $rotation orig/$i.pnm ocr/unpapered-$i.pnm
   convert ocr/unpapered-$i.pnm ocr/prepared-$i.tif
   rm ocr/unpapered-$i.pnm
 done
