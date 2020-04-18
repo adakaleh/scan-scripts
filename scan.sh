@@ -53,3 +53,14 @@ while [ $i -le $last_page ]; do
 
   i=`expr $i + 1`
 done
+
+echo 'Make CBZ file? [Y/n]'
+read input
+if [ "$input" = "" ] || [ "$input" = "y" ] || [ "$input" = "Y" ]; then
+  echo 'CBZ-ing...'
+  cd ../compressed/
+  zip -q -0 ../../magazine.cbz *
+  echo 'Done.'
+else
+  echo 'Abort.'
+fi
