@@ -13,7 +13,7 @@ fi
 
 # make required directories
 mkdir img/ocr
-mkdir text
+mkdir text-raw
 
 # get rotation argument for unpaper
 if [ $rotate -eq 90 ]; then
@@ -39,8 +39,5 @@ cd ..
 # OCR
 for i in `seq --format=%03.f $first_page $last_page`; do
   echo doing OCR on page $i
-  tesseract -l $language img/ocr/prepared-$i.tif text/page-$i
+  tesseract -l $language img/ocr/prepared-$i.tif text-raw/page-$i
 done
-
-# merge text files
-cat text/page-*.txt > text/complete.txt
