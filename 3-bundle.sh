@@ -61,9 +61,10 @@ fo.close()"
       printf "\\n\\n\\n"
     } >> complete.txt
 
-    # Zip
-    zip -q "../${basename}_text.zip" ./*
   done
+
+  # Zip
+  zip -q "../${basename}_text.zip" ./*
 
   cd ..
 fi
