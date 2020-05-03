@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # go to the directory where this script is located
-cd `dirname "$0"`
+cd "$(dirname "$0")"
 
 # include the config file
 . ./config.sh
@@ -28,16 +28,16 @@ fi
 
 # convert images
 cd img
-for i in `seq --format=%03.f $first_page $last_page`; do
-  echo preparing page $i
-  unpaper $rotation orig/$i.pnm ocr/unpapered-$i.pnm
-  convert ocr/unpapered-$i.pnm ocr/prepared-$i.tif
-  rm ocr/unpapered-$i.pnm
+for i in $(seq --format=%03.f $first_page $last_page); do
+  echo "preparing page $i"
+  unpaper $rotation "orig/$i.pnm" "ocr/unpapered-$i.pnm"
+  convert "ocr/unpapered-$i.pnm" "ocr/prepared-$i.tif"
+  rm "ocr/unpapered-$i.pnm"
 done
 cd ..
 
 # OCR
-for i in `seq --format=%03.f $first_page $last_page`; do
-  echo doing OCR on page $i
-  tesseract -l $language img/ocr/prepared-$i.tif text-raw/page-$i
+for i in $(seq --format=%03.f $first_page $last_page); do
+  echo "doing OCR on page $i"
+  tesseract -l "$language" "img/ocr/prepared-$i.tif" "text-raw/page-$i"
 done

@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # go to the directory where this script is located
-cd `dirname "$0"`
+cd "$(dirname "$0")"
 
 # include the config file
 . ./config.sh
@@ -12,7 +12,7 @@ if [ -n "$compressed_image_format" ]; then
   mkdir img/compressed
 fi
 
-cd img/orig
+cd img/orig || exit
 
 echo
 echo Press Enter to scan the current page
@@ -24,7 +24,7 @@ i=$first_page
 while [ $i -le $last_page ]; do
 
   echo "Prepare page $i and press Enter"
-  read input
+  read -r input
   # if $input is a number
   if [ "$input" -eq "$input" 2>/dev/null ]; then
     # go to specified page
@@ -33,12 +33,12 @@ while [ $i -le $last_page ]; do
   # else if $input is set
   elif [ ! -z "$input" ]; then
     # repeat the previous page
-    i=`expr $i - 1`
+    i=$((i - 1))
     continue
   fi
-  page=`printf %03.f $i`
+  page=$(printf %03.f $i)
 
-  scanimage --device $device --mode $mode --progress --format=pnm --resolution $resolution -x $width -y $length > $page.pnm
+  scanimage --device "$device" --mode "$mode" --progress --format=pnm --resolution $resolution -x $width -y $length > "$page.pnm"
 
   # compress image
   if [ -n "$compressed_image_format" ]; then
@@ -48,8 +48,8 @@ while [ $i -le $last_page ]; do
     if [ ! $rotate -eq 0 ]; then
       rotation="-rotate $rotate"
     fi
-    convert $quality $rotation $page.pnm ../compressed/$page.$compressed_image_format
+    convert $quality $rotation "$page.pnm" "../compressed/$page.$compressed_image_format"
   fi
 
-  i=`expr $i + 1`
+  i=$((i + 1))
 done
