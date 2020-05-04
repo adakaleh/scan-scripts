@@ -8,9 +8,6 @@ cd "$(dirname "$0")"
 
 # make required directories
 mkdir -p img/orig
-if [ -n "$compressed_image_format" ]; then
-  mkdir img/compressed
-fi
 
 cd img/orig || exit
 
@@ -50,17 +47,6 @@ while [ $i -le $last_page ]; do
   fi
 
   scanimage --device "$device" --mode "$mode" --progress --format=pnm --resolution $resolution -x $width -y $length > "$page.pnm"
-
-  # compress image
-  if [ -n "$compressed_image_format" ]; then
-    if [ -n "$compressed_image_quality" ]; then
-      quality="-quality $compressed_image_quality"
-    fi
-    if [ ! $rotate -eq 0 ]; then
-      rotation="-rotate $rotate"
-    fi
-    convert $quality $rotation "$page.pnm" "../compressed/$page.$compressed_image_format"
-  fi
 
   i=$((i + 1))
 done

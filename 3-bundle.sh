@@ -15,6 +15,24 @@ cd "$(dirname "$0")"
 # Get current directory name
 basename="$(basename "$PWD")"
 
+# Compress images
+if [ -d img/orig ]; then
+  if [ -n "$compressed_image_format" ]; then
+    echo Compressing images...
+    mkdir img/compressed
+    if [ -n "$compressed_image_quality" ]; then
+      quality="-quality $compressed_image_quality"
+    fi
+    if [ ! $rotate -eq 0 ]; then
+      rotation="-rotate $rotate"
+    fi
+    for f in img/orig/*; do
+      page=$(echo "$f" | tr -d img/orig/ | tr -d .pnm)
+      convert $quality $rotation "img/orig/$page.pnm" "img/compressed/$page.$compressed_image_format"
+    done
+  fi
+fi
+
 # Make CBZ file
 if [ -d img/compressed ]; then
   echo CBZ-ing...
