@@ -52,7 +52,7 @@ fo.close()"
     fi
 
     # Get page number from file name
-    pag=$(echo "$f" | cut -d '-' -f 2 | cut -d '.' -f 1)
+    pag=$(echo "$f" | tr -d page- | tr -d .txt)
 
     # Merge text files
     {

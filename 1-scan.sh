@@ -36,7 +36,18 @@ while [ $i -le $last_page ]; do
     i=$((i - 1))
     continue
   fi
-  page=$(printf %03.f $i)
+
+  if [ $i -lt 1 ]; then
+    # -3 -> 000_1
+    # -2 -> 000_2
+    # -1 -> 000_3
+    #  0 -> 000_4
+    page=$((-first_page + 1 + i))
+    page=$(printf %03.f $page)
+  else
+    #  1 -> 001
+    page=$(printf %03.f $i)
+  fi
 
   scanimage --device "$device" --mode "$mode" --progress --format=pnm --resolution $resolution -x $width -y $length > "$page.pnm"
 

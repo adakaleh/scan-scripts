@@ -28,7 +28,9 @@ fi
 
 # convert images
 cd img
-for i in $(seq --format=%03.f $first_page $last_page); do
+for f in orig/*; do
+  # Get page number from file name
+  i=$(echo "$f" | tr -d orig/ | tr -d .pnm)
   echo "preparing page $i"
   unpaper $rotation "orig/$i.pnm" "ocr/unpapered-$i.pnm"
   convert "ocr/unpapered-$i.pnm" "ocr/prepared-$i.tif"
@@ -37,7 +39,9 @@ done
 cd ..
 
 # OCR
-for i in $(seq --format=%03.f $first_page $last_page); do
+for f in img/ocr/*; do
+  # Get page number from file name
+  i=$(echo "$f" | tr -d img/ocr/prepared- | tr -d .tif)
   echo "doing OCR on page $i"
   tesseract -l "$language" "img/ocr/prepared-$i.tif" "text-raw/page-$i"
 done

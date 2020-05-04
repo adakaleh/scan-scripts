@@ -6,7 +6,7 @@ device='genesys:libusb:001:004'
 # get mode: `scanimage --help --device yourdevice`
 mode='Color' # ex: Color|Gray|Lineart
 
-first_page=1
+first_page=1 # can be a negative number, if needed
 last_page=100
 
 width=210 # millimeters
