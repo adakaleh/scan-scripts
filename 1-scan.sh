@@ -11,6 +11,12 @@ mkdir -p img/orig
 
 cd img/orig || exit
 
+# scan filename can be supplied as an argument
+if [ ! -z "$1" ]; then
+  scanimage --device "$device" --mode "$mode" --progress --format=pnm --resolution $resolution -x $width -y $length > "$1.pnm"
+  exit
+fi
+
 echo
 echo Press Enter to scan the current page
 echo Enter a letter to go to the previous page
