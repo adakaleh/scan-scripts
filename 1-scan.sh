@@ -46,7 +46,7 @@ while [ $i -le $last_page ]; do
     # -1 -> 000_3
     #  0 -> 000_4
     page=$((-first_page + 1 + i))
-    page=$(printf %03.f $page)
+    page="000_$page"
   else
     #  1 -> 001
     page=$(printf %03.f $i)
