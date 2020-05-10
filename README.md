@@ -4,10 +4,11 @@ This is a very productive scanning and OCR setup, intended to speed up the scann
 
 1. install the [required packages](#required-packages)
 2. plug in your scanner
-3. edit `config.sh` according to your needs (see [Usage](#usage))
+3. edit `config.sh` according to your needs (see [Configuration](#configuration))
 4. run `./1-scan.sh`
-5. run `./2-ocr.sh`
-6. run `./3-bundle.sh`
+5. do any necessary renaming and extra scanning (see [Naming convention](#naming-convention))
+6. run `./2-ocr.sh`
+7. run `./3-bundle.sh`
 
 This setup was inspired by [How to scan and OCR like a pro with open source tools](https://www.linux.com/learn/how-scan-and-ocr-pro-open-source-tools). The article also explains a few things not included in these scripts, like how to remove page numbers and unnecessary line feeds. Add these parts in if you need to.
 
@@ -26,7 +27,7 @@ If you have an old version of Debian, install the newer Tesseract language packa
 
 `sudo apt -t stretch-backports install tesseract-ocr-eng`
 
-## Usage
+## Configuration
 
 Before using the scripts, you must edit `config.sh` according to your needs. You need to change at least the following options:
 
@@ -34,7 +35,13 @@ Before using the scripts, you must edit `config.sh` according to your needs. You
 2. `width` and `height`: measure the pages' width and height in millimeters. Images will be cropped to this size automatically.
 3. `first_page` and `last_page`. `first_page` can be a negative number, if needed (see below).
 
-### Naming convention
+Other important options are:
+
+4. `language`: the language setting for OCR must correspond to the document's language. Ex: `'eng'` for English, `'ron'` for Romanian.
+5. `rotate`: angle for clockwise auto-rotation of every page. Possible values are 0, 90, 180 and 270.
+6. `resolution` in DPI, defaults to 300.
+
+## Naming convention
 
 For clarity, we want file names to match page numbers: `001.pnm` for page 1, etc. As for the unnumbered pages (covers, inserts, folds, etc), we must name them in a way that preserves page order. This is especially important when generating CBZ files, in which page order is determined by file names. We have two main situations:
 
